@@ -1,0 +1,19 @@
+.nested-checkbox {
+  .nested-checkbox-item {
+    .checkbox {
+      // background color is #5d5dec when checked and white when unchecked, icon color is white when checked
+      &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        top: 0;
+        left: 0;
+        border: 2px solid #5d5dec;
+        border-radius: 3px;
+        background-color: #fff;
+      }
+    }
+  }
+}

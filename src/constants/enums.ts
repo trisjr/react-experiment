@@ -1,0 +1,5 @@
+export enum STATUS {
+  CHECKED,
+  UNCHECKED,
+  INDETERMINATE,
+}
