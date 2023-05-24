@@ -1,9 +1,11 @@
-import { ConvertedNestedItem, NestedItem } from "../constants/types.ts";
-import { STATUS } from "../constants/enums.ts";
+import { ConvertedNestedItem, NestedItem } from "../constants/types";
+import { STATUS } from "../constants/enums";
 
-export const convertNestedData = (nestedData: NestedItem[]) => {
+export const convertNestedData = (
+  nestedData: NestedItem[]
+): ConvertedNestedItem[] => {
   const convertedData: ConvertedNestedItem[] = [];
-  const idToConvertedItemMap: { [id: number]: ConvertedNestedItem } = {};
+  const idToConvertedItemMap: Record<number, ConvertedNestedItem> = {};
 
   function buildConvertedStructure(item: NestedItem): ConvertedNestedItem {
     const convertedItem: ConvertedNestedItem = {
@@ -28,14 +30,12 @@ export const convertNestedData = (nestedData: NestedItem[]) => {
     return convertedItem;
   }
 
-  for (const item of nestedData) {
-    buildConvertedStructure(item);
-  }
+  nestedData.forEach(buildConvertedStructure);
 
   return convertedData;
 };
 
-const isChildrenChecked = (el: ConvertedNestedItem) => {
+const isChildrenChecked = (el: ConvertedNestedItem): boolean => {
   if (el.children.length === 0) {
     return el.isChecked;
   }
@@ -49,7 +49,7 @@ const isChildrenChecked = (el: ConvertedNestedItem) => {
   return true;
 };
 
-const isChildrenUnchecked = (el: ConvertedNestedItem) => {
+const isChildrenUnchecked = (el: ConvertedNestedItem): boolean => {
   if (el.children.length === 0) {
     return !el.isChecked;
   }

@@ -11,7 +11,7 @@ function App() {
 
   return (
     <div style={{ height: "100vh" }}>
-      <NestedCheckbox items={originalData} onSelect={handleSelect} />
+      <NestedCheckbox items={originalData} onSubmit={handleSelect} />
     </div>
   );
 }

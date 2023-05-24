@@ -1,37 +1,34 @@
 import React, { useState } from "react";
-import { ConvertedNestedItem, NestedItem } from "../constants/types.ts";
-import { convertNestedData } from "../helpers/nestedHelper.ts";
-import NestedCheckboxItem from "./NestedCheckboxItem.tsx";
+import { ConvertedNestedItem, NestedItem } from "../constants/types";
+import { convertNestedData } from "../helpers/nestedHelper";
+import NestedCheckboxItem from "./NestedCheckboxItem";
 import "../styles/nestedCheckbox.scss";
 
 type NestedCheckboxProps = {
   items: NestedItem[];
-  onSelect: (data: ConvertedNestedItem[]) => void;
+  onSubmit: (data: ConvertedNestedItem[]) => void;
 };
 
-const NestedCheckbox: React.FC<NestedCheckboxProps> = ({ items, onSelect }) => {
-  const [data, setData] = useState<ConvertedNestedItem[]>(
+const NestedCheckbox: React.FC<NestedCheckboxProps> = ({ items, onSubmit }) => {
+  const [data, setData] = useState<ConvertedNestedItem[]>(() =>
     convertNestedData(items)
   );
 
-  const handleCheckboxSelect = (id: number, isChecked: boolean): void => {
-    const newData = data.map((item) => {
-      if (item.id === id) {
-        item.isChecked = isChecked;
-      }
-      return item;
-    });
+  const handleSubmit = (id: number, isChecked: boolean): void => {
+    const newData = data.map((item) =>
+      item.id === id ? { ...item, isChecked } : item
+    );
     setData(newData);
-    onSelect(newData);
+    onSubmit(newData);
   };
 
   return (
-    <div className={"nested-checkbox"}>
+    <div className="nested-checkbox">
       {data.map((item) => (
         <NestedCheckboxItem
           key={item.id}
           item={item}
-          onSelect={handleCheckboxSelect}
+          onSelect={handleSubmit}
           level={0}
         />
       ))}
