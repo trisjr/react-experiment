@@ -69,7 +69,7 @@ const NestedCheckboxItem: React.FC<NestedCheckboxItemProps> = React.memo(
       <div className="nested-checkbox-item" style={{ marginLeft: level * 20 }}>
         <div className="nested-checkbox-item--content">
           <img
-            src="src/assets/chevron-down.svg"
+            src="../assets/chevron-down.svg"
             alt="arrow"
             onClick={() => {
               setIsExpanded(!isExpanded);

@@ -1,38 +1,45 @@
 import { ConvertedNestedItem, NestedItem } from "../constants/types";
 import { STATUS } from "../constants/enums";
 
+export const getItemsByParentId = (
+  id: number,
+  nestedData: NestedItem[],
+  memo: { [key: number]: ConvertedNestedItem[] } = {}
+): ConvertedNestedItem[] => {
+  if (memo[id]) {
+    return memo[id];
+  }
+
+  if (nestedData.length === 0) {
+    return [];
+  }
+
+  const items: ConvertedNestedItem[] = [];
+  const currentItems: NestedItem[] = nestedData.filter(
+    (item) => item.parentId !== id
+  );
+
+  for (const item of nestedData) {
+    if (item.parentId === id) {
+      const convertedItem: ConvertedNestedItem = {
+        id: item.id,
+        label: item.label,
+        isChecked: item.isChecked,
+        children: [],
+      };
+      items.push(convertedItem);
+      convertedItem.children = getItemsByParentId(item.id, currentItems, memo);
+    }
+  }
+
+  memo[id] = items;
+  return items;
+};
+
 export const convertNestedData = (
   nestedData: NestedItem[]
 ): ConvertedNestedItem[] => {
-  const convertedData: ConvertedNestedItem[] = [];
-  const idToConvertedItemMap: Record<number, ConvertedNestedItem> = {};
-
-  function buildConvertedStructure(item: NestedItem): ConvertedNestedItem {
-    const convertedItem: ConvertedNestedItem = {
-      id: item.id,
-      label: item.label,
-      isChecked: item.isChecked,
-      children: [],
-    };
-
-    if (item.parentId === undefined) {
-      convertedData.push(convertedItem);
-    } else {
-      const parentItem = idToConvertedItemMap[item.parentId];
-      if (!parentItem.children) {
-        parentItem.children = [];
-      }
-      parentItem.children.push(convertedItem);
-    }
-
-    idToConvertedItemMap[item.id] = convertedItem;
-
-    return convertedItem;
-  }
-
-  nestedData.forEach(buildConvertedStructure);
-
-  return convertedData;
+  return getItemsByParentId(0, nestedData);
 };
 
 const isChildrenChecked = (el: ConvertedNestedItem): boolean => {

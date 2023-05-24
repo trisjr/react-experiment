@@ -4,7 +4,7 @@ export const nestedData: NestedItem[] = [
   {
     id: 1,
     label: "Food",
-    parentId: undefined,
+    parentId: 0,
     isChecked: false,
   },
   {
@@ -76,7 +76,7 @@ export const nestedData: NestedItem[] = [
   {
     id: 13,
     label: "Drinks",
-    parentId: undefined,
+    parentId: 0,
     isChecked: false,
   },
   {
@@ -98,6 +98,12 @@ export const nestedData: NestedItem[] = [
     isChecked: false,
   },
   {
+    id: 19,
+    label: "Carrot Juice",
+    parentId: 17,
+    isChecked: false,
+  },
+  {
     id: 17,
     label: "Apple Juice",
     parentId: 3,
@@ -106,12 +112,6 @@ export const nestedData: NestedItem[] = [
   {
     id: 18,
     label: "Orange Juice",
-    parentId: 17,
-    isChecked: false,
-  },
-  {
-    id: 19,
-    label: "Carrot Juice",
     parentId: 17,
     isChecked: false,
   },
